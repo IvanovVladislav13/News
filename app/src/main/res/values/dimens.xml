@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_margin">16dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
+    <dimen name="corner_radius">10dp</dimen>
+    <dimen name="app_large_text">20sp</dimen>
+    <dimen name="height_img_news">150dp</dimen>
+    <dimen name="app_normal_text">16sp</dimen>
+    <dimen name="progress_bottom_margin">80dp</dimen>
+</resources>
