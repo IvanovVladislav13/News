@@ -1,4 +1,4 @@
-package com.ivanov.newsapi.data.entities
+package com.ivanov.newsapi.data.remote.entities
 
 import android.os.Build
 import androidx.annotation.RequiresApi
