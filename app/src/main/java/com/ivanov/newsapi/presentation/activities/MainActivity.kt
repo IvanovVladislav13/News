@@ -5,33 +5,24 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.Navigation
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
 import com.ivanov.newsapi.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var mToolbar: Toolbar
     lateinit var navController: NavController
-    private var binding: ActivityMainBinding? = null
-    private val mBinding get() = binding!!
+    private val mBinding by viewBinding(ActivityMainBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_NewsAPI)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        super.onCreate(savedInstanceState)
 
 
         mToolbar = mBinding.toolbar
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setSupportActionBar(mToolbar)
-        title = getString(R.string.news)
-    }
-
-    override fun onDestroy() {
-        binding = null
-        super.onDestroy()
     }
 }

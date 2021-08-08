@@ -1,15 +1,14 @@
 package com.ivanov.newsapi.presentation.fragments.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
 import com.ivanov.newsapi.databinding.NewsFragmentBinding
 import com.ivanov.newsapi.data.room.entity.News
@@ -23,8 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment(R.layout.news_fragment) {
 
-    private var binding: NewsFragmentBinding? = null
-    private val mBinding get() = binding!!
+    private val mBinding by viewBinding(NewsFragmentBinding::bind)
     @ExperimentalPagingApi
     private val viewModel: NewsViewModel by viewModel()
     private lateinit var mRecyclerView: RecyclerView
@@ -32,19 +30,10 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
     private lateinit var mLoaderStateAdapter: LoaderStateAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = NewsFragmentBinding.inflate(layoutInflater)
-        return mBinding.root
-    }
-
     @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapters()
+        initAdapters(savedInstanceState)
         initRecyclerView()
         initViewModel()
         initRefresh()
@@ -70,7 +59,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         }
     }
 
-    private fun initAdapters() {
+    private fun initAdapters(savedInstanceState: Bundle?) {
         mAdapter = NewsAdapter(context)
         mLoaderStateAdapter = LoaderStateAdapter(context) { mAdapter.retry() }
 
@@ -78,10 +67,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
             override fun onItemClick(news: News, position: Int) {
                 val bundle = Bundle()
                 bundle.putString("URL", news.url)
-                (activity as MainActivity).navController.navigate(
-                    R.id.action_newsFragment_to_webViewActivity,
-                    bundle
-                )
+                (activity as MainActivity).navController.navigate(R.id.action_newsFragment_to_webViewFragment, bundle)
             }
         })
     }
@@ -92,7 +78,6 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     }
 
     override fun onDestroyView() {
-        binding = null
         mRecyclerView.adapter = null
         super.onDestroyView()
     }

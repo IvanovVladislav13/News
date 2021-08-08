@@ -15,8 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsAPI">
 
-        <activity android:name=".presentation.activities.WebViewActivity" />
-
         <activity
             android:name=".presentation.activities.MainActivity"
             android:theme="@style/SplashTheme">

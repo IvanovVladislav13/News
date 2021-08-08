@@ -8,13 +8,13 @@ import java.util.*
 class DateConverter {
 
     @TypeConverter
-    fun fromDate(date: Date): String {
-        return date.toString()
+    fun fromDate(date: Date): Long {
+        return date.time
     }
 
     @SuppressLint("SimpleDateFormat")
     @TypeConverter
-    fun toDate(date: String): Date{
-        return SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ROOT).parse(date)!!
+    fun toDate(date: Long): Date{
+        return Date(date)
     }
 }
