@@ -22,19 +22,7 @@ data class Article(
     val urlToImage: String?,
     val publishedAt: String,
     val content: String
-) {
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun setToNews() = News(
-        url = url,
-        title = title,
-        description = description,
-        urlToImg = urlToImage,
-        date = LocalDateTime.parse(
-            publishedAt,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        )
-    )
-}
+)
 
 data class Source(
 

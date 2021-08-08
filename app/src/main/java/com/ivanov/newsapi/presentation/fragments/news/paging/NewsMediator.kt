@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.paging.*
 import androidx.room.withTransaction
+import com.ivanov.newsapi.data.common.mappers.toEntity
 import com.ivanov.newsapi.data.room.AppRoomDatabase
 import com.ivanov.newsapi.data.room.entity.Keys
 import com.ivanov.newsapi.data.room.entity.News
@@ -15,7 +16,6 @@ class NewsMediator(
     private val database: AppRoomDatabase
 ) : RemoteMediator<Int, News>() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun load(loadType: LoadType, state: PagingState<Int, News>): MediatorResult {
 
         val page = when (loadType) {
@@ -38,7 +38,7 @@ class NewsMediator(
 
         try {
             val articles = newsServices.getNewsFromApi(page)
-            val response = articles?.map { it.setToNews() }
+            val response = articles?.map { it.toEntity() }
             val endOfPagination = response?.size!! < state.config.pageSize
 
             database.withTransaction {

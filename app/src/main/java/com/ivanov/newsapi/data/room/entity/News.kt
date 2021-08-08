@@ -3,13 +3,13 @@ package com.ivanov.newsapi.data.room.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.ivanov.newsapi.data.room.converters.LocaleDateTimeConverter
-import java.time.LocalDateTime
+import com.ivanov.newsapi.data.room.converters.DateConverter
+import java.util.*
 
 @Entity(tableName = "news")
-@TypeConverters(LocaleDateTimeConverter::class)
+@TypeConverters(DateConverter::class)
 data class News(@PrimaryKey val url: String,
                 val title: String?,
                 val description: String?,
                 val urlToImg: String?,
-                val date: LocalDateTime)
+                val date: Date)

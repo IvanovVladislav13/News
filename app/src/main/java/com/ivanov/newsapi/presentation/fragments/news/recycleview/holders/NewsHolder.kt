@@ -17,7 +17,7 @@ class NewsHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val description = view.item_news_description
     private val date = view.item_news_date
 
-    fun bind(news: News?){
+    fun bind(news: News?) {
         if (news?.urlToImg != null && news.urlToImg.isNotBlank()) {
             Picasso.get().load(news.urlToImg).into(image)
         }
@@ -25,16 +25,9 @@ class NewsHolder(view: View) : RecyclerView.ViewHolder(view) {
         title.text = news?.title
         description.text = news?.description
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            date.text = news?.date?.format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"))
-
+        if (news?.date != null) {
+            date.text = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
+                .format(news.date)
         }
-
-        // TODO
-        val dateT: Date = Calendar.getInstance().time
-
-        date.text = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault())
-            .format(dateT)
-
     }
 }
