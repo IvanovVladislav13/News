@@ -9,7 +9,7 @@ interface NewsDao {
     @Query("SELECT * from news order by date desc")
     fun getAllNews(): PagingSource<Int, News>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertNews(news: List<News>)
 
     @Query("DELETE from news")

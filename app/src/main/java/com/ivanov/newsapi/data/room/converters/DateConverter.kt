@@ -1,5 +1,6 @@
 package com.ivanov.newsapi.data.room.converters
 
+import android.annotation.SuppressLint
 import androidx.room.TypeConverter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,8 +12,9 @@ class DateConverter {
         return date.toString()
     }
 
+    @SuppressLint("SimpleDateFormat")
     @TypeConverter
     fun toDate(date: String): Date{
-        return SimpleDateFormat("yyyy.MM.dd'T'HH:mm:ss", Locale.getDefault()).parse(date)!!
+        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date)!!
     }
 }

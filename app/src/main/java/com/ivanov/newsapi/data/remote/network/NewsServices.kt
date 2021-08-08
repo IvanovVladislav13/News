@@ -10,7 +10,7 @@ interface NewsServices {
     fun getNewsList(@Query("q") searchName: String = "ios",
                     @Query("from") from: String = "2019-04-00",
                     @Query("sortBy") sortBy: String = "publishedAt",
-                    @Query("apiKey") apiKey: String = "26eddb253e7840f988aec61f2ece2907",
+                    @Query("apiKey") apiKey: String = "557f39298fbe456ca032694b0f8c1f88",
                     @Query("page") page: Int
     ): Call<NewsResponse>
 }

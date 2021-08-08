@@ -12,5 +12,5 @@ fun Article.toEntity() = News(
     title = title,
     description = description,
     urlToImg = urlToImage,
-    date = SimpleDateFormat("yyyy.MM.dd'T'HH:mm:ss'Z'", Locale.getDefault()).parse(publishedAt)!!
+    date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(publishedAt)!!
 )

@@ -14,7 +14,6 @@ class LoaderStateAdapter(private val context: Context?,
                          private val retry: () -> Unit
 ): LoadStateAdapter<LoaderStateHolder>() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: LoaderStateHolder, loadState: LoadState) {
         holder.bind(loadState)
     }

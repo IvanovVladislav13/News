@@ -20,7 +20,6 @@ class NewsAdapter(private val context: Context?): PagingDataAdapter<News, NewsHo
         return NewsHolder(LayoutInflater.from(context).inflate(R.layout.news_item, parent, false))
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         val item = getItem(position = position)
 

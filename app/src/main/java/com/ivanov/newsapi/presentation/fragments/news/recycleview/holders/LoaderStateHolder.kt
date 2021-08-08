@@ -18,7 +18,6 @@ class LoaderStateHolder(view: View, retry: () -> Unit): RecyclerView.ViewHolder(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun bind(loadState: LoadState){
 
         when(loadState){
