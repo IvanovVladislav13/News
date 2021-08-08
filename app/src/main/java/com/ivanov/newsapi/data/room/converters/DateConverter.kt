@@ -15,6 +15,6 @@ class DateConverter {
     @SuppressLint("SimpleDateFormat")
     @TypeConverter
     fun toDate(date: String): Date{
-        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date)!!
+        return SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ROOT).parse(date)!!
     }
 }
