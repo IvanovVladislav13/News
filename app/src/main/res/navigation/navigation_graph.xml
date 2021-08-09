@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.ivanov.newsapi.presentation.fragments.news.NewsFragment"
-        android:label="news_fragment"
+        android:label="@string/news"
         tools:layout="@layout/news_fragment" >
         <action
             android:id="@+id/action_newsFragment_to_webViewFragment"
@@ -17,10 +17,5 @@
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.ivanov.newsapi.presentation.fragments.webview.WebViewFragment"
-        android:label="fragment_web_view"
-        tools:layout="@layout/fragment_web_view" >
-        <action
-            android:id="@+id/action_webViewFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_web_view" />
 </navigation>

@@ -1,17 +1,14 @@
 package com.ivanov.newsapi.presentation.fragments.news.recycleview.holders
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.ivanov.newsapi.R
 import com.ivanov.newsapi.data.room.entity.News
 import com.ivanov.newsapi.databinding.NewsItemBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.news_item.view.*
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class NewsHolder(view: View) : RecyclerView.ViewHolder(view) {
 

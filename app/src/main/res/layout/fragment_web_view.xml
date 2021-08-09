@@ -6,17 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragments.webview.WebViewFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="mini"
-        app:backgroundTint="@color/app_color"
-        android:layout_margin="@dimen/floating_button_margin"
-        android:src="@drawable/ic_arrow_back"
-        app:tint="@color/white" />
-
-
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"

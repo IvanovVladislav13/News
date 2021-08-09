@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
-import com.ivanov.newsapi.databinding.NewsFragmentBinding
 import com.ivanov.newsapi.data.room.entity.News
+import com.ivanov.newsapi.databinding.NewsFragmentBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters.LoaderStateAdapter
 import com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters.NewsAdapter
@@ -33,7 +33,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapters(savedInstanceState)
+        initAdapters()
         initRecyclerView()
         initViewModel()
         initRefresh()
@@ -59,7 +59,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         }
     }
 
-    private fun initAdapters(savedInstanceState: Bundle?) {
+    private fun initAdapters() {
         mAdapter = NewsAdapter(context)
         mLoaderStateAdapter = LoaderStateAdapter(context) { mAdapter.retry() }
 
@@ -73,7 +73,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     }
 
     private fun initRecyclerView() {
-        mRecyclerView = mBinding.recycleNews
+        mRecyclerView = mBinding.recyclerNews
         mRecyclerView.adapter = mAdapter.withLoadStateFooter(mLoaderStateAdapter)
     }
 
