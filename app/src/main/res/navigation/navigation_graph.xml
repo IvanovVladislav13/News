@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.ivanov.newsapi.presentation.fragments.webview.WebViewFragment"
+        android:name="com.ivanov.newsapi.presentation.fragments.news_overview.NewsOverviewFragment"
         tools:layout="@layout/fragment_web_view" />
 </navigation>

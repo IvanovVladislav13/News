@@ -1,4 +1,4 @@
-package com.ivanov.newsapi.presentation.fragments.news.recycleview.holders
+package com.ivanov.newsapi.presentation.fragments.news.holders
 
 import android.view.View
 import androidx.paging.LoadState

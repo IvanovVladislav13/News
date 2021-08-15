@@ -1,8 +1,8 @@
 package com.ivanov.newsapi.presentation.fragments.news
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
@@ -13,22 +13,23 @@ import com.ivanov.newsapi.R
 import com.ivanov.newsapi.data.room.entity.News
 import com.ivanov.newsapi.databinding.NewsFragmentBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
-import com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters.LoaderStateAdapter
-import com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters.NewsAdapter
-import com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters.OnItemClickListener
+import com.ivanov.newsapi.presentation.fragments.news.adapters.LoaderStateAdapter
+import com.ivanov.newsapi.presentation.fragments.news.adapters.NewsAdapter
+import com.ivanov.newsapi.presentation.fragments.news.adapters.OnItemClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment(R.layout.news_fragment) {
 
-    private val mBinding by viewBinding(NewsFragmentBinding::bind)
+    private val binding by viewBinding(NewsFragmentBinding::bind)
+
     @ExperimentalPagingApi
     private val viewModel: NewsViewModel by viewModel()
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mAdapter: NewsAdapter
-    private lateinit var mSwipeRefresh: SwipeRefreshLayout
-    private lateinit var mLoaderStateAdapter: LoaderStateAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NewsAdapter
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var loaderStateAdapter: LoaderStateAdapter
 
     @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,12 +41,12 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     }
 
     private fun initRefresh() {
-        mSwipeRefresh = mBinding.swipeRefresh
-        mSwipeRefresh.setOnRefreshListener { mAdapter.refresh() }
+        swipeRefresh = binding.swipeRefresh
+        swipeRefresh.setOnRefreshListener { adapter.refresh() }
 
         lifecycleScope.launch {
-            mAdapter.loadStateFlow.collectLatest {
-                mSwipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+            adapter.loadStateFlow.collectLatest {
+                swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
             }
         }
     }
@@ -54,31 +55,34 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     private fun initViewModel() {
         lifecycleScope.launch {
             viewModel.fetchNews().collectLatest {
-                mAdapter.submitData(it)
+                adapter.submitData(it)
             }
         }
     }
 
     private fun initAdapters() {
-        mAdapter = NewsAdapter(context)
-        mLoaderStateAdapter = LoaderStateAdapter(context) { mAdapter.retry() }
+        adapter = NewsAdapter(context)
+        loaderStateAdapter = LoaderStateAdapter(context) { adapter.retry() }
 
-        mAdapter.setOnItemClickListener(object : OnItemClickListener {
+        adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(news: News, position: Int) {
                 val bundle = Bundle()
                 bundle.putString("URL", news.url)
-                (activity as MainActivity).navController.navigate(R.id.action_newsFragment_to_webViewFragment, bundle)
+                (activity as MainActivity).navController.navigate(
+                    R.id.action_newsFragment_to_webViewFragment,
+                    bundle
+                )
             }
         })
     }
 
     private fun initRecyclerView() {
-        mRecyclerView = mBinding.recyclerNews
-        mRecyclerView.adapter = mAdapter.withLoadStateFooter(mLoaderStateAdapter)
+        recyclerView = binding.recyclerNews
+        recyclerView.adapter = adapter.withLoadStateFooter(loaderStateAdapter)
     }
 
     override fun onDestroyView() {
-        mRecyclerView.adapter = null
+        recyclerView.adapter = null
         super.onDestroyView()
     }
 }

@@ -1,4 +1,4 @@
-package com.ivanov.newsapi.presentation.fragments.news.recycleview.adapters
+package com.ivanov.newsapi.presentation.fragments.news.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,14 +8,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ivanov.newsapi.R
 import com.ivanov.newsapi.data.room.entity.News
-import com.ivanov.newsapi.presentation.fragments.news.recycleview.holders.NewsHolder
+import com.ivanov.newsapi.presentation.fragments.news.holders.NewsHolder
 
-class NewsAdapter(private val context: Context?): PagingDataAdapter<News, NewsHolder>(diffCallback = DifferCallback) {
+class NewsAdapter(private val context: Context?) :
+    PagingDataAdapter<News, NewsHolder>(diffCallback = DifferCallback) {
 
-    private lateinit var mItemClickListener: OnItemClickListener
+    private lateinit var itemClickListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
-        return NewsHolder(LayoutInflater.from(context).inflate(R.layout.news_item, parent, false))
+        return NewsHolder(
+            LayoutInflater.from(context)
+                .inflate(R.layout.news_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
@@ -24,19 +28,19 @@ class NewsAdapter(private val context: Context?): PagingDataAdapter<News, NewsHo
         holder.itemView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
                 if (item != null) {
-                    mItemClickListener.onItemClick(item, position)
+                    itemClickListener.onItemClick(item, position)
                 }
             }
         }
         holder.bind(item)
     }
 
-    fun setOnItemClickListener(itemClickListener: OnItemClickListener){
-        mItemClickListener = itemClickListener
+    fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
+        this.itemClickListener = itemClickListener
     }
 }
 
-interface OnItemClickListener{
+interface OnItemClickListener {
     fun onItemClick(news: News, position: Int)
 }
 

@@ -1,8 +1,9 @@
 package com.ivanov.newsapi.presentation.fragments.news.paging
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadType
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.ivanov.newsapi.data.common.mappers.toEntity
 import com.ivanov.newsapi.data.room.AppRoomDatabase
