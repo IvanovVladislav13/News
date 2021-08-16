@@ -3,7 +3,8 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="date">Date</string>
-    <string name="news">Новости</string>
+    <string name="title_news">Новости</string>
     <string name="btn_retry">Повторить</string>
     <string name="text_error">Интернет отстутствует</string>
+    <string name="title_map">Карта</string>
 </resources>

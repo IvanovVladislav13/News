@@ -9,11 +9,11 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
-import com.ivanov.newsapi.databinding.FragmentWebViewBinding
+import com.ivanov.newsapi.databinding.FragmentNewsOverviewBinding
 
-class NewsOverviewFragment : Fragment(R.layout.fragment_web_view) {
+class NewsOverviewFragment : Fragment(R.layout.fragment_news_overview) {
 
-    private val binding by viewBinding(FragmentWebViewBinding::bind)
+    private val binding by viewBinding(FragmentNewsOverviewBinding::bind)
     private lateinit var webView: WebView
     private lateinit var url: String
 
@@ -35,10 +35,16 @@ class NewsOverviewFragment : Fragment(R.layout.fragment_web_view) {
             ): Boolean {
                 return false
             }
+
+            override fun onPageCommitVisible(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                binding.progressBarWeb.visibility = View.INVISIBLE
+            }
         }
 
         if (url.isNotBlank()) {
             webView.loadUrl(url)
+            binding.progressBarWeb.visibility = View.VISIBLE
         }
     }
 }

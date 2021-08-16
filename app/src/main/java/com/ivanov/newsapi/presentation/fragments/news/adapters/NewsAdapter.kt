@@ -38,10 +38,10 @@ class NewsAdapter(private val context: Context?) :
     fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
         this.itemClickListener = itemClickListener
     }
-}
 
-interface OnItemClickListener {
-    fun onItemClick(news: News, position: Int)
+    interface OnItemClickListener {
+        fun onItemClick(news: News, position: Int)
+    }
 }
 
 private object DifferCallback : DiffUtil.ItemCallback<News>() {

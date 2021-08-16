@@ -3,19 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph.xml"
-    app:startDestination="@id/newsFragment">
+    app:startDestination="@id/navigation_news_fragment">
 
     <fragment
-        android:id="@+id/newsFragment"
+        android:id="@+id/navigation_news_fragment"
         android:name="com.ivanov.newsapi.presentation.fragments.news.NewsFragment"
-        android:label="@string/news"
+        android:label="@string/title_news"
         tools:layout="@layout/news_fragment" >
         <action
             android:id="@+id/action_newsFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment" />
+            app:destination="@id/navigation_webview_fragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/webViewFragment"
+        android:id="@+id/navigation_webview_fragment"
         android:name="com.ivanov.newsapi.presentation.fragments.news_overview.NewsOverviewFragment"
-        tools:layout="@layout/fragment_web_view" />
+        tools:layout="@layout/fragment_news_overview" />
+
+    <fragment
+        android:id="@+id/navigation_map_fragment"
+        android:name="com.ivanov.newsapi.presentation.fragments.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/map_fragment" />
 </navigation>

@@ -15,7 +15,6 @@ import com.ivanov.newsapi.databinding.NewsFragmentBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.news.adapters.LoaderStateAdapter
 import com.ivanov.newsapi.presentation.fragments.news.adapters.NewsAdapter
-import com.ivanov.newsapi.presentation.fragments.news.adapters.OnItemClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +41,9 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
 
     private fun initRefresh() {
         swipeRefresh = binding.swipeRefresh
-        swipeRefresh.setOnRefreshListener { adapter.refresh() }
+        swipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest {
@@ -64,7 +65,16 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         adapter = NewsAdapter(context)
         loaderStateAdapter = LoaderStateAdapter(context) { adapter.retry() }
 
-        adapter.setOnItemClickListener(object : OnItemClickListener {
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                if(positionStart == 0 && positionStart == recyclerView.paddingStart){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        })
+
+        adapter.setOnItemClickListener(object : NewsAdapter.OnItemClickListener {
             override fun onItemClick(news: News, position: Int) {
                 val bundle = Bundle()
                 bundle.putString("URL", news.url)
