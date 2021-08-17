@@ -11,4 +11,9 @@
         android:title="@string/title_map"
         android:icon="@drawable/ic_map"/>
 
+    <item
+        android:id="@+id/navigation_select_image_fragment"
+        android:title="@string/title_image"
+        android:icon="@drawable/ic_image"/>
+
 </menu>

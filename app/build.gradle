@@ -84,4 +84,7 @@ dependencies {
 
     // To use only without reflection variants of viewBinding
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.7'
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

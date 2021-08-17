@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setTheme(R.style.Theme_NewsAPI)
         super.onCreate(savedInstanceState)
 
-        with(binding){
+        with(binding) {
             this@MainActivity.bottomNavView = bottomNavView
             this@MainActivity.toolbar = toolbar
         }
@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.navigation_news_fragment,
-                R.id.navigation_map_fragment
+                R.id.navigation_map_fragment,
+                R.id.navigation_select_image_fragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfig)
