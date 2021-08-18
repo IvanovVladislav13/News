@@ -9,7 +9,7 @@
         android:id="@+id/navigation_news_fragment"
         android:name="com.ivanov.newsapi.presentation.fragments.news.NewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/news_fragment" >
+        tools:layout="@layout/news_fragment">
         <action
             android:id="@+id/action_newsFragment_to_webViewFragment"
             app:destination="@id/navigation_webview_fragment" />
@@ -30,5 +30,14 @@
         android:id="@+id/navigation_select_image_fragment"
         android:name="com.ivanov.newsapi.presentation.fragments.images.SelectImageFragment"
         android:label="@string/title_image"
-        tools:layout="@layout/fragment_select_image" />
+        tools:layout="@layout/fragment_select_image">
+        <action
+            android:id="@+id/action_navigation_select_image_fragment_to_navigation_show_image_fragment"
+            app:destination="@id/navigation_show_image_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_show_image_fragment"
+        android:name="com.ivanov.newsapi.presentation.fragments.images.ShowImageFragment"
+        android:label="@string/title_show_image"
+        tools:layout="@layout/fragment_show_image" />
 </navigation>

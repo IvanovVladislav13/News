@@ -15,4 +15,5 @@
     <string name="title_image">Изображение</string>
     <string name="select_image_text">Выбрать из галереи</string>
     <string name="take_photo_text">Сделать фото</string>
+    <string name="title_show_image">Выбранное изображение</string>
 </resources>

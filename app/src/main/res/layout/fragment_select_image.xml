@@ -6,6 +6,7 @@
     tools:context=".presentation.fragments.images.SelectImageFragment">
 
     <Button
+        android:id="@+id/pick_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
@@ -15,6 +16,7 @@
         android:textSize="@dimen/app_normal_text"/>
 
     <Button
+        android:id="@+id/take_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="310dp"
