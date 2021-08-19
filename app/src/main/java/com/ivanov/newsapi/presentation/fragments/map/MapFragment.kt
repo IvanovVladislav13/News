@@ -1,6 +1,7 @@
 package com.ivanov.newsapi.presentation.fragments.map
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -13,14 +14,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.ivanov.newsapi.R
+import com.ivanov.newsapi.presentation.fragments.map.util.MapUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener {
 
-    private val viewModel by viewModel<MapViewModel>()
     private var permissionDenied = false
     private lateinit var map: GoogleMap
+
     private val requestMultiplePermissions =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -28,10 +30,9 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback,
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
                 && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             ) {
-                Log.e("Разрешение", "дано")
+                enableMyLocation()
             } else {
                 permissionDenied = true
-                Log.e("Разрешение", "отказ")
             }
         }
 
@@ -65,7 +66,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback,
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        if (viewModel.isGeolocationEnabled(requireContext())) {
+        if (MapUtil.isGeolocationEnabled(requireContext())) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.location_button_click_text),

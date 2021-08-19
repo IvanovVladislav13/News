@@ -1,10 +1,10 @@
 package com.ivanov.newsapi.presentation.fragments.images
 
+import android.Manifest
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +14,6 @@ import com.ivanov.newsapi.R
 import com.ivanov.newsapi.databinding.FragmentSelectImageBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.images.util.ImageUtil
-import kotlinx.coroutines.launch
 
 class SelectImageFragment : Fragment(R.layout.fragment_select_image) {
 
@@ -23,13 +22,20 @@ class SelectImageFragment : Fragment(R.layout.fragment_select_image) {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri: Uri? ->
-            toNextFragment(imageUri)
+            if (imageUri != null)
+                toNextFragment(imageUri)
         }
 
-    private val takePictureResult =
+    private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if(success)
+            if (success)
                 toNextFragment(tempUri)
+        }
+
+    private val requestPermissionCamera =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted)
+                takeImage()
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,19 +50,19 @@ class SelectImageFragment : Fragment(R.layout.fragment_select_image) {
         }
 
         binding.takeImage.setOnClickListener {
-            takeImage()
+            requestPermissionCamera.launch(Manifest.permission.CAMERA)
         }
     }
 
     private fun takeImage() {
         lifecycleScope.launchWhenCreated {
-            ImageUtil.createFile(requireContext())?.also {
+            ImageUtil.createFile(requireContext())?.also { file ->
                 tempUri = FileProvider.getUriForFile(
                     requireContext(),
                     "${BuildConfig.APPLICATION_ID}.provider",
-                    it
+                    file
                 )
-                takePictureResult.launch(tempUri)
+                takePicture.launch(tempUri)
             }
         }
     }

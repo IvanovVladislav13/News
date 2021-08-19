@@ -1,28 +1,38 @@
 package com.ivanov.newsapi.presentation.fragments.images
 
-import android.graphics.BitmapFactory
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
 import com.ivanov.newsapi.databinding.FragmentShowImageBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.images.util.ImageUtil
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.InputStream
+import com.ivanov.newsapi.presentation.fragments.images.util.ZoomMultiTouch
 
 class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
 
     private val binding by viewBinding(FragmentShowImageBinding::bind)
+    private val zoom = ZoomMultiTouch()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setOnListener()
         showImage()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setOnListener() {
+        binding.imageOverview.setOnTouchListener { v, event ->
+            val view: ImageView = v as ImageView
+            view.bringToFront()
+            zoom.viewTransformation(view, event)
+            return@setOnTouchListener true
+        }
     }
 
     private fun showImage() {

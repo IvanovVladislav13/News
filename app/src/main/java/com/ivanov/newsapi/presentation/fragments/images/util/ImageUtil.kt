@@ -13,6 +13,9 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val MAX_HEIGHT = 1024
+private const val MAX_WIDTH = 1024
+
 object ImageUtil {
 
     @SuppressLint("SimpleDateFormat")
