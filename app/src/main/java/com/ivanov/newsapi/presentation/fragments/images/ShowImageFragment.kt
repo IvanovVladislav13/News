@@ -11,27 +11,36 @@ import com.ivanov.newsapi.R
 import com.ivanov.newsapi.databinding.FragmentShowImageBinding
 import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.images.util.ImageUtil
+import com.ivanov.newsapi.presentation.fragments.images.util.ZOOM_MAX
+import com.ivanov.newsapi.presentation.fragments.images.util.ZOOM_MIN
 import com.ivanov.newsapi.presentation.fragments.images.util.ZoomMultiTouch
 
 class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
 
     private val binding by viewBinding(FragmentShowImageBinding::bind)
-    private val zoom = ZoomMultiTouch()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setOnListener()
+        setOnClickListeners()
         showImage()
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun setOnListener() {
+    private fun setOnClickListeners() {
         binding.imageOverview.setOnTouchListener { v, event ->
             val view: ImageView = v as ImageView
             view.bringToFront()
-            zoom.viewTransformation(view, event)
+            ZoomMultiTouch.viewTransformation(view, event)
             return@setOnTouchListener true
+        }
+
+        binding.zoomIn.setOnClickListener {
+            zoomIn()
+        }
+
+        binding.zoomOut.setOnClickListener {
+            zoomOut()
         }
     }
 
@@ -42,6 +51,37 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
             binding.imageOverview.setImageBitmap(bitmap)
         } catch (e: Exception) {
             (activity as MainActivity).navController.popBackStack()
+        }
+    }
+
+    private fun zoomIn() {
+        if (binding.imageOverview.scaleX < ZOOM_MAX
+            && binding.imageOverview.scaleY < ZOOM_MAX
+        ) {
+            val x = binding.imageOverview.scaleX
+            val y = binding.imageOverview.scaleY
+
+            binding.imageOverview.scaleX = x + 1
+            binding.imageOverview.scaleY = y + 1
+        }
+    }
+
+    private fun zoomOut() {
+        if (binding.imageOverview.scaleX > ZOOM_MIN
+            && binding.imageOverview.scaleY > ZOOM_MIN
+        ) {
+            val x = binding.imageOverview.scaleX
+            val y = binding.imageOverview.scaleY
+
+            if ((x == ZOOM_MIN && y == ZOOM_MIN) || x - 1 <= ZOOM_MIN) {
+                binding.imageOverview.scaleX = ZOOM_MIN
+                binding.imageOverview.scaleY = ZOOM_MIN
+                binding.imageOverview.animate()
+                    .x(ZOOM_MIN).y(ZOOM_MIN).setDuration(500).start()
+            } else {
+                binding.imageOverview.scaleX = x - 1
+                binding.imageOverview.scaleY = y - 1
+            }
         }
     }
 }

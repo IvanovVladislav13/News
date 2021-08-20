@@ -65,10 +65,10 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         adapter = NewsAdapter(context)
         loaderStateAdapter = LoaderStateAdapter(context) { adapter.retry() }
 
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-                if(positionStart == 0 && positionStart == recyclerView.paddingStart){
+                if (positionStart == 0 && positionStart == recyclerView.paddingStart) {
                     recyclerView.scrollToPosition(0)
                 }
             }
