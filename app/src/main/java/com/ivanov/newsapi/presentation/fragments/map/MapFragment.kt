@@ -1,21 +1,18 @@
 package com.ivanov.newsapi.presentation.fragments.map
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.ivanov.newsapi.R
 import com.ivanov.newsapi.presentation.fragments.map.util.MapUtil
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener {

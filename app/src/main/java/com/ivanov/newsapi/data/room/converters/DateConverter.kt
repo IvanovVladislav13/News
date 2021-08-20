@@ -2,7 +2,7 @@ package com.ivanov.newsapi.data.room.converters
 
 import android.annotation.SuppressLint
 import androidx.room.TypeConverter
-import java.util.Date
+import java.util.*
 
 class DateConverter {
 

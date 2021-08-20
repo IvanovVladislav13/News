@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.ivanov.newsapi.data.room.converters.DateConverter
-import java.util.Date
+import java.util.*
 
 @Entity(tableName = "news")
 @TypeConverters(DateConverter::class)

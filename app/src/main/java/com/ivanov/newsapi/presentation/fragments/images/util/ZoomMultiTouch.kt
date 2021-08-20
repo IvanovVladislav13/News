@@ -3,7 +3,9 @@ package com.ivanov.newsapi.presentation.fragments.images.util
 import android.graphics.PointF
 import android.view.MotionEvent
 import android.view.View
-import kotlin.math.*
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.sqrt
 
 private const val NONE = 0
 private const val DRAG = 1

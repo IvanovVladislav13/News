@@ -1,6 +1,6 @@
 package com.ivanov.newsapi.domain.models
 
-import java.util.Date
+import java.util.*
 
 data class News(
     val url: String,
