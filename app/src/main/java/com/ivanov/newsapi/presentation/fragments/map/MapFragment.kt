@@ -63,13 +63,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback,
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        if (MapUtil.isGeolocationEnabled(requireContext())) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.location_button_click_text),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
+        if (!MapUtil.isGeolocationEnabled(requireContext())) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.gps_disabled_text),

@@ -33,6 +33,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initAdapters()
         initRecyclerView()
         initViewModel()
@@ -64,6 +65,8 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     private fun initAdapters() {
         adapter = NewsAdapter(context)
         loaderStateAdapter = LoaderStateAdapter(context) { adapter.retry() }
+        adapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -78,6 +81,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
             override fun onItemClick(news: News, position: Int) {
                 val bundle = Bundle()
                 bundle.putString("URL", news.url)
+
                 (activity as MainActivity).navController.navigate(
                     R.id.action_newsFragment_to_webViewFragment,
                     bundle
@@ -91,8 +95,9 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         recyclerView.adapter = adapter.withLoadStateFooter(loaderStateAdapter)
     }
 
+    @ExperimentalPagingApi
     override fun onDestroyView() {
-        recyclerView.adapter = null
         super.onDestroyView()
+        recyclerView.adapter = null
     }
 }

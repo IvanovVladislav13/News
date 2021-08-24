@@ -1,6 +1,7 @@
 package com.ivanov.newsapi.presentation.fragments.news
 
 import android.app.Application
+import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*

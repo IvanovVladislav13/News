@@ -7,11 +7,8 @@
     <string name="btn_retry">Повторить</string>
     <string name="text_error">Интернет отстутствует</string>
     <string name="title_map">Карта</string>
-    <string name="location_button_click_text">Моё местоположение</string>
     <string name="permission_denied_text">Разрешение на определение местоположения не дано</string>
     <string name="gps_disabled_text">Включите определение местоположения</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_image">Изображение</string>
     <string name="select_image_text">Выбрать из галереи</string>
     <string name="take_photo_text">Сделать фото</string>
