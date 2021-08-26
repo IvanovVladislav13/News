@@ -55,18 +55,21 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
 
     @ExperimentalPagingApi
     private fun initViewModel() {
-        lifecycleScope.launch {
-            viewModel.fetchNews().collectLatest {
-                adapter.submitData(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.newsState.collectLatest {
+                adapter.submitData(viewLifecycleOwner.lifecycle, it)
             }
+        }
+        if (viewModel.newsPosition > 0) {
+            recyclerView.scrollToPosition(viewModel.newsPosition)
+            viewModel.newsPosition = 0
         }
     }
 
+    @ExperimentalPagingApi
     private fun initAdapters() {
         adapter = NewsAdapter(context)
         loaderStateAdapter = LoaderStateAdapter(context) { adapter.retry() }
-        adapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -85,7 +88,9 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
                 (activity as MainActivity).navController.navigate(
                     R.id.action_newsFragment_to_webViewFragment,
                     bundle
-                )
+                ).also {
+                    viewModel.newsPosition = position
+                }
             }
         })
     }
@@ -95,7 +100,6 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         recyclerView.adapter = adapter.withLoadStateFooter(loaderStateAdapter)
     }
 
-    @ExperimentalPagingApi
     override fun onDestroyView() {
         super.onDestroyView()
         recyclerView.adapter = null

@@ -1,8 +1,8 @@
 package com.ivanov.newsapi.presentation.fragments.news
 
 import android.app.Application
-import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.ivanov.newsapi.data.room.AppRoomDatabase
@@ -13,12 +13,17 @@ import kotlinx.coroutines.flow.Flow
 
 @ExperimentalPagingApi
 class NewsViewModel(
+    savedStateHandle: SavedStateHandle,
     application: Application,
     private val newsServices: NewsServicesRepository,
     private val database: AppRoomDatabase
 ) : AndroidViewModel(application) {
 
-    fun fetchNews(): Flow<PagingData<News>> {
+    val newsState = savedStateHandle.get<Flow<PagingData<News>>>("news") ?: fetchNews()
+    var newsPosition = savedStateHandle.get<Int>("newsPosition") ?: 0
+
+
+    private fun fetchNews(): Flow<PagingData<News>> {
         val pagingSourceFactory = { database.getNewsDao().getAllNews() }
 
         return Pager(
