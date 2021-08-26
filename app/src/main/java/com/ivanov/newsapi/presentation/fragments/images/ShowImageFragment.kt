@@ -1,10 +1,8 @@
 package com.ivanov.newsapi.presentation.fragments.images
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ivanov.newsapi.R
@@ -13,7 +11,6 @@ import com.ivanov.newsapi.presentation.activities.MainActivity
 import com.ivanov.newsapi.presentation.fragments.images.util.ImageUtil
 import com.ivanov.newsapi.presentation.fragments.images.util.ZOOM_MAX
 import com.ivanov.newsapi.presentation.fragments.images.util.ZOOM_MIN
-import com.ivanov.newsapi.presentation.fragments.images.util.ZoomMultiTouch
 
 class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
 
@@ -22,19 +19,17 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setScale()
         setOnClickListeners()
         showImage()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setOnClickListeners() {
-        binding.imageOverview.setOnTouchListener { v, event ->
-            val view: ImageView = v as ImageView
-            view.bringToFront()
-            ZoomMultiTouch.viewTransformation(view, event)
-            return@setOnTouchListener true
-        }
+    private fun setScale() {
+        binding.imageOverview.minimumScale = ZOOM_MIN
+        binding.imageOverview.maximumScale = ZOOM_MAX
+    }
 
+    private fun setOnClickListeners() {
         binding.zoomIn.setOnClickListener {
             zoomIn()
         }
@@ -55,32 +50,19 @@ class ShowImageFragment : Fragment(R.layout.fragment_show_image) {
     }
 
     private fun zoomIn() {
-        if (binding.imageOverview.scaleX < ZOOM_MAX
-            && binding.imageOverview.scaleY < ZOOM_MAX
-        ) {
-            val x = binding.imageOverview.scaleX
-            val y = binding.imageOverview.scaleY
-
-            binding.imageOverview.scaleX = x + 1
-            binding.imageOverview.scaleY = y + 1
+        if (binding.imageOverview.scale < ZOOM_MAX) {
+            binding.imageOverview.scale += 1
         }
     }
 
     private fun zoomOut() {
-        if (binding.imageOverview.scaleX > ZOOM_MIN
-            && binding.imageOverview.scaleY > ZOOM_MIN
-        ) {
-            val x = binding.imageOverview.scaleX
-            val y = binding.imageOverview.scaleY
+        if (binding.imageOverview.scale > ZOOM_MIN) {
+            val scale = binding.imageOverview.scale
 
-            if ((x == ZOOM_MIN && y == ZOOM_MIN) || x - 1 <= ZOOM_MIN) {
-                binding.imageOverview.scaleX = ZOOM_MIN
-                binding.imageOverview.scaleY = ZOOM_MIN
-                binding.imageOverview.animate()
-                    .x(ZOOM_MIN).y(ZOOM_MIN).setDuration(500).start()
+            if (scale - 1 <= ZOOM_MIN) {
+                binding.imageOverview.scale = ZOOM_MIN
             } else {
-                binding.imageOverview.scaleX = x - 1
-                binding.imageOverview.scaleY = y - 1
+                binding.imageOverview.scale -= 1
             }
         }
     }
